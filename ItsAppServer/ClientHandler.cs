@@ -37,8 +37,8 @@ namespace ItsAppServer
                     NetworkStream stream = TcpClient.GetStream();
                     var br = new BinaryReader(stream);
                     message = br.ReadString();
-                    MessageQueue.Messages.Add(message);
-
+                    this.Name = message;
+                    Console.WriteLine(this.Name);
                 }
 
                 TcpClient.Close();

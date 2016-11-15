@@ -35,9 +35,7 @@ namespace ItsAppServer
                 while (true)
                 {
                     TcpClient newTcpClient = listener.AcceptTcpClient();
-                    NetworkStream n = newTcpClient.GetStream();
-                    string name = new BinaryReader(n).ReadString();
-                    ClientHandler newClient = new ClientHandler(name , newTcpClient, this);
+                    ClientHandler newClient = new ClientHandler("Server Slayer" , newTcpClient, this);
                     ConnectedUsers.Add(newClient);
                     Thread client = new Thread(newClient.Run);
                     Console.WriteLine("New user added");

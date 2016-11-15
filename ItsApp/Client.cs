@@ -17,10 +17,7 @@ namespace ItsApp
             Console.WriteLine("Skriv in din IP-adress, Benke");
             string input = Console.ReadLine();
             client = new TcpClient(input, 9965);
-            Console.WriteLine("Ange ditt chatnamn: ");
             
-
-
         }
     }
 }
