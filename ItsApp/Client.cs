@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ItsApp
@@ -20,6 +21,11 @@ namespace ItsApp
             Console.WriteLine("Skriv in din IP-adress, Benke");
             string input = Console.ReadLine();
             client = new TcpClient(input, 9965);
+
+            Thread SenderThread = new Thread(Sender);
+
+            SenderThread.Start();
+            SenderThread.Join();
             
                
         }
