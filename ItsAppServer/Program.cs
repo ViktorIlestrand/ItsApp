@@ -13,7 +13,9 @@ namespace ItsAppServer
         {
             Server myServer = new Server();
             Thread serverThread = new Thread(myServer.Run);
+
             serverThread.Start();
+
             serverThread.Join();
         }
     }

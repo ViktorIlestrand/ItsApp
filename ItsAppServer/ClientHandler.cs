@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace ItsAppServer
 {
-    class ClientHandler
+    public class ClientHandler
     {
         static int nextId;
         public int Id { get; set; }
         public string Name { get; set; }
         public TcpClient TcpClient { get; set; }
-        public Server Server { get; set; }
+        private Server Server { get; set; }
         public ClientHandler(string name, TcpClient tcp, Server server)
         {
             Name = name;
@@ -23,24 +23,32 @@ namespace ItsAppServer
             Server = server;
             Id = nextId;
             nextId++;
-
-            Thread client = new Thread(Run);
-            client.Start();
+                       
         }
 
         public void Run()
         {
-            string message = "";
-
-            while(message.ToLower() != "quit") //TODO: EVERYONE GETS THROWN OUT IF SOMEONE WRITES QUIT
+            try
             {
-                NetworkStream stream = TcpClient.GetStream();
-                message = new BinaryReader(stream).ReadString();
-                MessageQueue.Messages.Add(message);
+                string message = "";
+
+                while (!message.ToLower().Equals("quit")) //TODO: EVERYONE GETS THROWN OUT IF SOMEONE WRITES QUIT
+                {
+                    NetworkStream stream = TcpClient.GetStream();
+                    var br = new BinaryReader(stream);
+                    message = br.ReadString();
+                    MessageQueue.Messages.Add(message);
+
+                }
+
+                TcpClient.Close();
 
             }
-
-            TcpClient.Close();
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            
 
         }
     }

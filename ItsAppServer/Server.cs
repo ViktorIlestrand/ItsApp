@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ItsAppServer
 {
-    class Server
+    public class Server
     {
-        public List<ClientHandler> ConnectedUsers { get; set; }
+        public List<ClientHandler> ConnectedUsers = new List<ClientHandler>();
 
         private TcpListener listener { get; set; }
 
@@ -33,8 +35,11 @@ namespace ItsAppServer
                 while (true)
                 {
                     TcpClient newTcpClient = listener.AcceptTcpClient();
-                    ClientHandler newClient = new ClientHandler("Benke", newTcpClient, this);
+                    NetworkStream n = newTcpClient.GetStream();
+                    string name = new BinaryReader(n).ReadString();
+                    ClientHandler newClient = new ClientHandler(name , newTcpClient, this);
                     ConnectedUsers.Add(newClient);
+                    Thread client = new Thread(newClient.Run);
                     Console.WriteLine("New user added");
                 }
             }

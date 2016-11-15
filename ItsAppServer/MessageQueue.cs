@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ItsAppServer
 {
-    static class MessageQueue
+    public static class MessageQueue
     {
         static public List<string> Messages { get; set; }
 
