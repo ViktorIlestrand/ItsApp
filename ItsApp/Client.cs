@@ -17,9 +17,8 @@ namespace ItsApp
 
         public void Start()
         {
-            Console.WriteLine("Skriv in din IP-adress, Benke");
-            string input = Console.ReadLine();
-            client = new TcpClient(input, 9965);
+            string ip = "192.168.25.167";
+            client = new TcpClient(ip, 9965);
 
             Thread SenderThread = new Thread(Sender);
             Thread ListenerThread = new Thread(Listener);
@@ -38,10 +37,9 @@ namespace ItsApp
 
             try
             {
-                NetworkStream n = client.GetStream();
-
                 while (!message.ToLower().Equals("quit"))
                 {
+                    NetworkStream n = client.GetStream();
                     message = Console.ReadLine();
                     BinaryWriter writer = new BinaryWriter(n);
                     writer.Write(message);

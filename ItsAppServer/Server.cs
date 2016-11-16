@@ -22,16 +22,8 @@ namespace ItsAppServer
             {
                 listener = new TcpListener(IPAddress.Any, 9965);
                 Console.WriteLine("Server is up and running!");
-
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-
-            try
-            {
                 listener.Start();
+
                 while (true)
                 {
                     TcpClient newTcpClient = listener.AcceptTcpClient();
@@ -39,10 +31,9 @@ namespace ItsAppServer
                     ConnectedUsers.Add(newClient);
                     Thread client = new Thread(newClient.Run);
 
-                    Console.WriteLine("New user added");
+                    Console.WriteLine(newClient.Name + " just joined");
 
                     client.Start();
-                    
                 }
             }
             catch (Exception ex)
