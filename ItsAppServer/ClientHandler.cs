@@ -32,6 +32,26 @@ namespace ItsAppServer
             try
             {
                 string message = "";
+                
+                if (this.TcpClient.Connected)
+                {
+                    try
+                    {
+                        NetworkStream x = this.TcpClient.GetStream();
+                        BinaryWriter writer = new BinaryWriter(x);
+                        writer.Write("Ange ditt chattnamn!");
+                        writer.Flush();
+                        NetworkStream y = this.TcpClient.GetStream();
+                        BinaryReader reader = new BinaryReader(y);
+                        string name = reader.ReadString();
+                        this.Name = name;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+
+                }
 
                 while (!message.ToLower().Equals("quit")) //TODO: EVERYONE GETS THROWN OUT IF SOMEONE WRITES QUIT
                 {

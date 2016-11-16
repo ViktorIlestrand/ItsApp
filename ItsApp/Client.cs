@@ -68,8 +68,26 @@ namespace ItsApp
                 {
                     var br = new BinaryReader(stream);
                     message = br.ReadString();
-                    Message output = JsonConvert.DeserializeObject<Message>(message);
-                    Console.WriteLine($"{output.TimeStamp} {output.SentBy} {output.Input}");
+
+                    bool IsJson = true;
+
+                    try
+                    {
+                        var jsonobject = JsonConvert.DeserializeObject(message);
+                        IsJson = true;
+                    }
+                    catch (Exception)
+                    {
+                        IsJson = false;
+                    }
+                    if (IsJson)
+                    {
+                        Message output = JsonConvert.DeserializeObject<Message>(message);
+                        Console.WriteLine($"{output.TimeStamp} - {output.SentBy}: {output.Input}");
+                    }else
+                    {
+                        Console.WriteLine(message);
+                    }
                 }
 
                 client.Close();
