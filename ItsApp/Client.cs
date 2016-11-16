@@ -13,8 +13,7 @@ namespace ItsApp
     class Client
     {
         private TcpClient client;
-
-      
+        
 
         public void Start()
         {
@@ -24,8 +23,7 @@ namespace ItsApp
 
             Thread SenderThread = new Thread(Sender);
             Thread ListenerThread = new Thread(Listener);
-
-
+            
             SenderThread.Start();
             SenderThread.Join();
             
@@ -39,11 +37,10 @@ namespace ItsApp
             string message = "";
 
             try
-            {
-                NetworkStream n = client.GetStream();
-
+            {              
                 while (!message.ToLower().Equals("quit"))
                 {
+                    NetworkStream n = client.GetStream();
                     message = Console.ReadLine();
                     BinaryWriter writer = new BinaryWriter(n);
                     writer.Write(message);
