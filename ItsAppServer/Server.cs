@@ -60,9 +60,6 @@ namespace ItsAppServer
 
         }
 
-        public void Broadcast()
-        {
-
-        }
+       
     }
 }
