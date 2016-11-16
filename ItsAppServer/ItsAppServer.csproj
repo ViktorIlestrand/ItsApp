@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClientHandler.cs" />
+    <Compile Include="MessageListener.cs" />
     <Compile Include="MessageQueue.cs" />
     <Compile Include="MessageGetter.cs" />
     <Compile Include="Program.cs" />

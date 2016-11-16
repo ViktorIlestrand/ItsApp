@@ -12,7 +12,7 @@ namespace ItsAppServer
 {
     public class Server
     {
-        public List<ClientHandler> ConnectedUsers = new List<ClientHandler>();
+        public static List<ClientHandler> ConnectedUsers = new List<ClientHandler>();
 
         private TcpListener listener { get; set; }
 
@@ -23,6 +23,10 @@ namespace ItsAppServer
                 listener = new TcpListener(IPAddress.Any, 9965);
                 Console.WriteLine("Server is up and running!");
                 listener.Start();
+
+                MessageListener msglistener = new MessageListener(this);
+                Thread thread = new Thread(msglistener.Run);
+                thread.Start();
 
                 while (true)
                 {
@@ -46,11 +50,22 @@ namespace ItsAppServer
                 {
                     listener.Stop();
                 }
+                
             }     
                         
 
         }
+        public void Broadcast(string message)
+        {
+            foreach (var user in Server.ConnectedUsers)
+            {
+                NetworkStream x = user.TcpClient.GetStream();
+                BinaryWriter writer = new BinaryWriter(x);
+                writer.Write(message);
+                writer.Flush();
+            }
+        }
 
-       
+
     }
 }

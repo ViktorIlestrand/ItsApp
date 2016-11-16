@@ -50,7 +50,6 @@ namespace ItsAppServer
                         default:
                             MessageQueue.AddMessage(message);
                             Console.WriteLine(message);
-                            Broadcast(TcpClient);
                             break;
                     }
 
@@ -66,18 +65,6 @@ namespace ItsAppServer
 
 
         }
-        public void Broadcast(TcpClient client)
-        {
-            var getter = new MessageGetter();
-            string message = getter.GetMessage();
-
-            foreach (var user in Server.ConnectedUsers)
-            {
-                NetworkStream x = user.TcpClient.GetStream();
-                BinaryWriter writer = new BinaryWriter(x);
-                writer.Write(message);
-                writer.Flush();
-            }
-        }
+        
     }
 }

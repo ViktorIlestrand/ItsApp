@@ -24,9 +24,9 @@ namespace ItsApp
             Thread ListenerThread = new Thread(Listener);
             
             SenderThread.Start();
-            SenderThread.Join();
-            
             ListenerThread.Start();
+
+            SenderThread.Join();
             ListenerThread.Join();
                
         }
