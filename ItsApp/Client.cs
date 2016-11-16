@@ -43,6 +43,7 @@ namespace ItsApp
                 {
                     NetworkStream n = client.GetStream();
                     message = Console.ReadLine();
+                    Console.WriteLine(DateTime.Now + " - You said: " + message);
                     BinaryWriter writer = new BinaryWriter(n);
                     writer.Write(message);
                     writer.Flush();

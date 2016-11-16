@@ -63,7 +63,7 @@ namespace ItsAppServer
             foreach (var user in Server.ConnectedUsers)
             {
                 
-                if (user.TcpClient.Connected)
+                if (user.TcpClient.Connected && !user.Name.Equals(message.SentBy))
                 {
                     try
                     {
