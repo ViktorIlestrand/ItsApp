@@ -13,7 +13,7 @@ namespace ItsAppServer
         public string GetMessage()
         {
             string message = MessageQueue.Messages.Last();
-            MessageQueue.Messages.Remove(message);
+            MessageQueue.Messages.Remove(MessageQueue.Messages.Last());
             return message;
         }
     }

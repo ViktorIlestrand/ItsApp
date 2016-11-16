@@ -37,10 +37,11 @@ namespace ItsApp
             string message = "";
 
             try
-            {              
+            {
+                NetworkStream n = client.GetStream();
+
                 while (!message.ToLower().Equals("quit"))
                 {
-                    NetworkStream n = client.GetStream();
                     message = Console.ReadLine();
                     BinaryWriter writer = new BinaryWriter(n);
                     writer.Write(message);
@@ -61,11 +62,12 @@ namespace ItsApp
 
             try
             {
-                
+
                 while (!message.ToLower().Equals("quit"))
                 {
-                    NetworkStream n = client.GetStream();
-                    message = new BinaryReader(n).ReadString();
+                    NetworkStream stream = client.GetStream();
+                    var br = new BinaryReader(stream);
+                    message = br.ReadString();
                     Console.WriteLine(message);
                 }
 

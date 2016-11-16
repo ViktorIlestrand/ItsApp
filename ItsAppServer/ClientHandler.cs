@@ -37,9 +37,9 @@ namespace ItsAppServer
                     NetworkStream stream = TcpClient.GetStream();
                     var br = new BinaryReader(stream);
                     message = br.ReadString();
-                    MessageQueue.Messages.Add(message);
-                    Broadcast();
+                    MessageQueue.AddMessage(message);
                     Console.WriteLine(message);
+                    Broadcast();
                 }
 
                 TcpClient.Close();
@@ -57,7 +57,6 @@ namespace ItsAppServer
             var getter = new MessageGetter();
             string message = getter.GetMessage();
             NetworkStream n = TcpClient.GetStream();
-
             BinaryWriter writer = new BinaryWriter(n);
             writer.Write(message);
             writer.Flush();
