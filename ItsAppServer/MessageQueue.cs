@@ -8,7 +8,7 @@ namespace ItsAppServer
 {
     public static class MessageQueue
     {
-        static public List<string> Messages { get; set; }
+        static public List<string> Messages = new List<string>();
 
         public static void AddMessage(string messageToAdd)
         {
