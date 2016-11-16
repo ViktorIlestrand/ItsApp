@@ -7,6 +7,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace ItsAppServer
 {
@@ -55,14 +56,28 @@ namespace ItsAppServer
                         
 
         }
-        public void Broadcast(string message)
+        public void Broadcast(Message message)
         {
+            string output = JsonConvert.SerializeObject(message);
+
             foreach (var user in Server.ConnectedUsers)
             {
-                NetworkStream x = user.TcpClient.GetStream();
-                BinaryWriter writer = new BinaryWriter(x);
-                writer.Write(message);
-                writer.Flush();
+                
+                if (user.TcpClient.Connected)
+                {
+                    try
+                    {
+                        NetworkStream x = user.TcpClient.GetStream();
+                        BinaryWriter writer = new BinaryWriter(x);
+                        writer.Write(output);
+                        writer.Flush();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                    
+                }
             }
         }
 

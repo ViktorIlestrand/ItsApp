@@ -66,6 +66,7 @@ namespace ItsApp
                 {
                     var br = new BinaryReader(stream);
                     message = br.ReadString();
+
                     Console.WriteLine(message);
                 }
 

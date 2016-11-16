@@ -8,16 +8,23 @@ namespace ItsAppServer
 {
     public static class MessageQueue
     {
-        static public List<string> Messages = new List<string>();
+        static List<Message> messages = new List<Message>();
 
-        public static void AddMessage(string messageToAdd)
+        public static void AddMessage(Message messageToAdd)
         {
-            Messages.Add(messageToAdd);
+            messages.Add(messageToAdd);
         }
 
-        public static void PublishMessage()
+        public static int CheckQueue()
         {
+            return messages.Count();
+        }
 
+        public static Message ReadAndRemove()
+        {
+            Message toBroadcast = messages.Last();
+            MessageQueue.messages.Remove(MessageQueue.messages.Last());
+            return toBroadcast;
         }
         //public static string GetMessage()
         //{

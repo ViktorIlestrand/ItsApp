@@ -48,7 +48,9 @@ namespace ItsAppServer
                             Console.WriteLine(this.Name);
                             break;
                         default:
-                            MessageQueue.AddMessage(message);
+
+                            var tmpMsg = new Message(this.Name, message); 
+                            MessageQueue.AddMessage(tmpMsg);
                             Console.WriteLine(message);
                             break;
                     }

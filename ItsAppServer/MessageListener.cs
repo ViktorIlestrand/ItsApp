@@ -20,11 +20,9 @@ namespace ItsAppServer
         {
             while (true)
             {
-                if (MessageQueue.Messages.Count != 0)
+                if (MessageQueue.CheckQueue() != 0)
                 {
-                    string toBroadcast = MessageQueue.Messages.Last();
-                    MessageQueue.Messages.Remove(MessageQueue.Messages.Last());
-                    server.Broadcast(toBroadcast);
+                    server.Broadcast(MessageQueue.ReadAndRemove());
                 }
                 Thread.Sleep(100);
             }
