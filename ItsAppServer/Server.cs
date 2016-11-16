@@ -39,6 +39,8 @@ namespace ItsAppServer
                     ConnectedUsers.Add(newClient);
                     Thread client = new Thread(newClient.Run);
                     Console.WriteLine("New user added");
+                    client.Start();
+                    client.Join();
                 }
             }
             catch (Exception ex)
