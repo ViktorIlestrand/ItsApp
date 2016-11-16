@@ -51,6 +51,7 @@
     <Compile Include="Message.cs" />
     <Compile Include="MessageListener.cs" />
     <Compile Include="MessageQueue.cs" />
+    <Compile Include="NewUserListener.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Server.cs" />

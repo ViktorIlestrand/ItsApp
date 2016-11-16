@@ -21,7 +21,7 @@ namespace ItsApp
         {
             string ip = "192.168.25.167";
             client = new TcpClient(ip, 9965);
-
+           
             Thread SenderThread = new Thread(Sender);
             Thread ListenerThread = new Thread(Listener);
             
