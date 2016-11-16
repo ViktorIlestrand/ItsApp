@@ -14,6 +14,11 @@ namespace ItsAppServer
         {
             Messages.Add(messageToAdd);
         }
+
+        public static void PublishMessage()
+        {
+
+        }
         //public static string GetMessage()
         //{
             // TODO 

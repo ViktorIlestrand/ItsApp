@@ -38,9 +38,11 @@ namespace ItsAppServer
                     ClientHandler newClient = new ClientHandler("Server Slayer" , newTcpClient, this);
                     ConnectedUsers.Add(newClient);
                     Thread client = new Thread(newClient.Run);
+
                     Console.WriteLine("New user added");
+
                     client.Start();
-                    client.Join();
+                    
                 }
             }
             catch (Exception ex)
@@ -55,6 +57,11 @@ namespace ItsAppServer
                 }
             }     
                         
+
+        }
+
+        public void Broadcast()
+        {
 
         }
     }
