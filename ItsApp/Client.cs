@@ -60,10 +60,10 @@ namespace ItsApp
 
             try
             {
+                NetworkStream stream = client.GetStream();
 
                 while (!message.ToLower().Equals("quit"))
                 {
-                    NetworkStream stream = client.GetStream();
                     var br = new BinaryReader(stream);
                     message = br.ReadString();
                     Console.WriteLine(message);
