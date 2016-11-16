@@ -7,6 +7,8 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using ItsAppServer;
 
 namespace ItsApp
 {
@@ -66,8 +68,8 @@ namespace ItsApp
                 {
                     var br = new BinaryReader(stream);
                     message = br.ReadString();
-
-                    Console.WriteLine(message);
+                    Message output = JsonConvert.DeserializeObject<Message>(message);
+                    Console.WriteLine($"{output.TimeStamp} {output.SentBy} {output.Input}");
                 }
 
                 client.Close();
