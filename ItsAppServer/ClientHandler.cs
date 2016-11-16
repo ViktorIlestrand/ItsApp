@@ -39,6 +39,9 @@ namespace ItsAppServer
                     message = br.ReadString();
                     this.Name = message;
                     Console.WriteLine(this.Name);
+                    BinaryWriter writer = new BinaryWriter(stream);
+                    writer.Write(message);
+                    writer.Flush();
                 }
 
                 TcpClient.Close();
