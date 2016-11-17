@@ -12,17 +12,19 @@ namespace ItsAppServer
 {
     public class ClientHandler
     {
-        static int nextId;
+        static int nextId = 1;
         public int Id { get; set; }
         public string Name { get; set; }
         public TcpClient TcpClient { get; set; }
         private Server Server { get; set; }
+        public int WritingTo { get; set; }
         public ClientHandler(string name, TcpClient tcp, Server server)
         {
             Name = name;
             TcpClient = tcp;
             Server = server;
             Id = nextId;
+            WritingTo = 0;
             nextId++;
 
         }
@@ -36,30 +38,62 @@ namespace ItsAppServer
 
                 while (!message.ToLower().Equals("quit")) //TODO: EVERYONE GETS THROWN OUT IF SOMEONE WRITES QUIT
                 {
-                    NetworkStream stream = TcpClient.GetStream();
-                    var br = new BinaryReader(stream);
-                    message = br.ReadString();
+                    var Reader = new NetworkIO(this.TcpClient);
+                    var Writer = new NetworkIO(this.TcpClient);
+                    message = Reader.ReadString();
 
                     switch (message)
                     {
                         case "changename":
-                            NetworkStream x = this.TcpClient.GetStream();
-                            BinaryWriter writer = new BinaryWriter(x);
-                            writer.Write("Vilket namn vill du byta till?");
-                            writer.Flush();
-                            NetworkStream y = this.TcpClient.GetStream();
-                            BinaryReader reader = new BinaryReader(y);
-                            this.Name = reader.ReadString();
+                            Writer.Write("Vilket namn vill du byta till?");
+                            this.Name = Reader.ReadString();
                             break;
                         case "myname":
-                            NetworkStream a = this.TcpClient.GetStream();
-                            BinaryWriter writer2 = new BinaryWriter(a);
-                            writer2.Write("Ditt nuvarande chattnamn är: " + this.Name);
-                            writer2.Flush();
+                            Writer.Write("Ditt nuvarande chattnamn är: " + this.Name);
                             break;
-                        default:
+                        case "whoishere":
+                            foreach (var user in Server.ConnectedUsers)
+                            {
+                                if (user != this)
+                                {
+                                    Writer.Write(user.Id + " " + user.Name);
+                                }else
+                                {
 
-                            var tmpMsg = new Message(this.Name, message); 
+                                }
+                            }
+                            break;
+                        case "w":
+                            Writer.Write("0 Alla i chatrummet");
+                            foreach (var user in Server.ConnectedUsers)
+                            {
+                                if (user != this)
+                                {
+                                    Writer.Write(user.Id + " " + user.Name);
+                                }else
+                                {
+
+                                }
+                            }
+                            Writer.Write("Vem vill du viska till? Ange ID enligt listan ovan.");
+                            string whisperTo = Reader.ReadString();
+                            try
+                            {
+                                this.WritingTo = Convert.ToInt32(whisperTo);
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                                Writer.Write("Något gick fel. Endast siffror är tillåtna.");
+                            }
+                                                                                    
+                            break;
+                        case "help":
+                            Writer.Write("\nw: Ändra mottagare av dina meddelanden\nmyname: Visar ditt nuvarande chattnamn\nchangename: Ändra ditt chattnamn\nwhoishere: Listar alla chattdeltagare\n");
+                            break;
+
+                        default:
+                            var tmpMsg = new Message(this.Name, message, this.WritingTo); 
                             MessageQueue.AddMessage(tmpMsg);
                             Console.WriteLine(message);
                             break;
