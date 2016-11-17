@@ -19,7 +19,7 @@ namespace ItsApp
 
         public void Start()
         {
-            string ip = "192.168.25.154";
+            string ip = "192.168.25.173";
             client = new TcpClient(ip, 9965);
            
             Thread SenderThread = new Thread(Sender);
@@ -86,7 +86,7 @@ namespace ItsApp
                     {
                         Message output = JsonConvert.DeserializeObject<Message>(message);
                         Console.ForegroundColor = ConsoleColor.Green;
-                        Console.WriteLine($"{output.TimeStamp} - {output.SentBy}: {output.Input}");
+                        Console.WriteLine($"{output.TimeStamp} - {output.SentByName}: {output.Input}");
                     }else
                     {
                         Console.ForegroundColor = ConsoleColor.White;

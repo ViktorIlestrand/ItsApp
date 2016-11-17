@@ -12,7 +12,6 @@ namespace ItsApp
     {
         static void Main(string[] args)
         {
-            IPHostEntry ngt;
             
             Client client = new Client();
             Thread thread = new Thread(client.Start);
