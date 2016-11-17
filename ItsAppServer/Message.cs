@@ -13,12 +13,13 @@ namespace ItsAppServer
         public string SentBy { get; set; }
         public string Input { get; set; }
 
-        public Message(string sentBy, string input, int recipient = 0)
+
+        public Message(string sentBy, string input, int writingTo)
         {
             SentBy = sentBy;
             Input = input;
             TimeStamp = DateTime.Now;
-            Recipient = recipient;
+            Recipient = writingTo;
         }
     }
 }
