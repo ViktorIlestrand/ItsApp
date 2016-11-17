@@ -25,7 +25,9 @@ namespace ItsAppServer
                 MessageListener msglistener = new MessageListener(this);
                 Thread thread = new Thread(msglistener.Run);
                 thread.Start();
-
+                DatabaseTools dbtools = new DatabaseTools();
+                dbtools.ClearDB();
+                dbtools.Start();
                 Console.WriteLine("Server is up and running!");
                 while (true)
                 {
@@ -50,11 +52,12 @@ namespace ItsAppServer
        
         public void Broadcast(Message message)
         {
+            DatabaseTools DBtools = new DatabaseTools();
             if (message.Recipient == 0)
             {
 
                 string output = JsonConvert.SerializeObject(message);
-
+                DBtools.AddMessage(message);
                 foreach (var user in Server.ConnectedUsers)
                 {
 
@@ -83,6 +86,7 @@ namespace ItsAppServer
                     {
                         var Writer = new NetworkIO(ConnectedUsers[i].TcpClient);
                         Writer.Write(output);
+                        DBtools.AddMessage(message);
                         break;
                     }else
                     {

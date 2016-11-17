@@ -93,7 +93,7 @@ namespace ItsAppServer
                             break;
 
                         default:
-                            var tmpMsg = new Message(this.Name, message, this.WritingTo); 
+                            var tmpMsg = new Message(this.Id, message, this.WritingTo, this.Name); 
                             MessageQueue.AddMessage(tmpMsg);
                             Console.WriteLine(message);
                             break;

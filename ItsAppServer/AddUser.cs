@@ -21,6 +21,7 @@ namespace ItsAppServer
 
         public void Run()
         {
+            DatabaseTools dbtool = new DatabaseTools();
             if (Tcp.Connected)
             {
                 try
@@ -35,6 +36,7 @@ namespace ItsAppServer
 
                     ClientHandler newClient = new ClientHandler(name, Tcp, Server);
                     Server.ConnectedUsers.Add(newClient);
+                    dbtool.AddChatter(newClient);
                     Thread client = new Thread(newClient.Run);
 
                     client.Start();
