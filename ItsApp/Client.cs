@@ -85,9 +85,17 @@ namespace ItsApp
                     if (IsJson)
                     {
                         Message output = JsonConvert.DeserializeObject<Message>(message);
+                        if(output.Recipient == 0) { 
                         Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine($"{output.TimeStamp} - {output.SentByName}: {output.Input}");
-                    }else
+                        }
+                        else
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine($"{output.TimeStamp} - {output.SentByName} Viskar till dig: {output.Input}");
+                        }
+                    }
+                    else
                     {
                         Console.ForegroundColor = ConsoleColor.White;
                         Console.WriteLine(message);
