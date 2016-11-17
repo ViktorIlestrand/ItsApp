@@ -44,7 +44,7 @@ namespace ItsApp
                     NetworkStream n = client.GetStream();
                     message = Console.ReadLine();
                     Console.ForegroundColor = ConsoleColor.Magenta;
-                    Console.WriteLine(DateTime.Now + " - You said: " + message.PadRight(20));
+                    Console.WriteLine(DateTime.Now + " - You said: " + message);
                     BinaryWriter writer = new BinaryWriter(n);
                     writer.Write(message);
                     writer.Flush();
@@ -86,11 +86,11 @@ namespace ItsApp
                     {
                         Message output = JsonConvert.DeserializeObject<Message>(message);
                         Console.ForegroundColor = ConsoleColor.Green;
-                        Console.WriteLine($"{output.TimeStamp} - {output.SentBy}: {output.Input.PadRight(20)}");
+                        Console.WriteLine($"{output.TimeStamp} - {output.SentBy}: {output.Input}");
                     }else
                     {
                         Console.ForegroundColor = ConsoleColor.White;
-                        Console.WriteLine(message.PadRight(20));
+                        Console.WriteLine(message);
                     }
                 }
 

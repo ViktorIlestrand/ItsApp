@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="AddUser.cs" />
     <Compile Include="ClientHandler.cs" />
+    <Compile Include="DatabaseTools.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="MessageListener.cs" />
     <Compile Include="MessageQueue.cs" />
