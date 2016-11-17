@@ -43,6 +43,7 @@ namespace ItsApp
                 {
                     NetworkStream n = client.GetStream();
                     message = Console.ReadLine();
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
                     Console.WriteLine(DateTime.Now + " - You said: " + message);
                     BinaryWriter writer = new BinaryWriter(n);
                     writer.Write(message);
@@ -84,9 +85,11 @@ namespace ItsApp
                     if (IsJson)
                     {
                         Message output = JsonConvert.DeserializeObject<Message>(message);
+                        Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine($"{output.TimeStamp} - {output.SentBy}: {output.Input}");
                     }else
                     {
+                        Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine(message);
                     }
                 }

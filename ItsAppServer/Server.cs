@@ -49,28 +49,49 @@ namespace ItsAppServer
        
         public void Broadcast(Message message)
         {
-            string output = JsonConvert.SerializeObject(message);
-
-            foreach (var user in Server.ConnectedUsers)
+            if (message.Recipient == 0)
             {
-                
-                if (user.TcpClient.Connected && !user.Name.Equals(message.SentBy))
+
+                string output = JsonConvert.SerializeObject(message);
+
+                foreach (var user in Server.ConnectedUsers)
                 {
-                    try
+
+                    if (user.TcpClient.Connected && !user.Name.Equals(message.SentBy))
                     {
-                        NetworkStream x = user.TcpClient.GetStream();
-                        BinaryWriter writer = new BinaryWriter(x);
-                        writer.Write(output);
-                        writer.Flush();
+                        try
+                        {
+                            var Writer = new NetworkIO(user.TcpClient);
+                            Writer.Write(output);
+
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                        }
 
                     }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                    }
-                    
                 }
+            }else
+            {
+                string output = JsonConvert.SerializeObject(message);
+
+                for (int i = 0; i < ConnectedUsers.Count(); i++)
+                {
+                    if(message.Recipient == ConnectedUsers[i].Id && ConnectedUsers[i].TcpClient.Connected)
+                    {
+                        var Writer = new NetworkIO(ConnectedUsers[i].TcpClient);
+                        Writer.Write(output);
+                        break;
+                    }else
+                    {
+
+                    }
+                }
+
+                
             }
+
         }
         
 
