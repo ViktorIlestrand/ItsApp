@@ -19,7 +19,7 @@ namespace ItsApp
 
         public void Start()
         {
-            string ip = "192.168.25.167";
+            string ip = "192.168.25.154";
             client = new TcpClient(ip, 9965);
            
             Thread SenderThread = new Thread(Sender);
