@@ -43,10 +43,19 @@ namespace ItsAppServer
                     switch (message)
                     {
                         case "changename":
-                            this.Name = "newName";
+                            NetworkStream x = this.TcpClient.GetStream();
+                            BinaryWriter writer = new BinaryWriter(x);
+                            writer.Write("Vilket namn vill du byta till?");
+                            writer.Flush();
+                            NetworkStream y = this.TcpClient.GetStream();
+                            BinaryReader reader = new BinaryReader(y);
+                            this.Name = reader.ReadString();
                             break;
                         case "myname":
-                            Console.WriteLine(this.Name);
+                            NetworkStream a = this.TcpClient.GetStream();
+                            BinaryWriter writer2 = new BinaryWriter(a);
+                            writer2.Write("Ditt nuvarande chattnamn är: " + this.Name);
+                            writer2.Flush();
                             break;
                         default:
 
