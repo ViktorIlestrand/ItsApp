@@ -43,7 +43,7 @@ namespace ItsApp
                 {
                     NetworkStream n = client.GetStream();
                     message = Console.ReadLine();
-                    Console.ForegroundColor = ConsoleColor.DarkYellow;
+                    Console.ForegroundColor = ConsoleColor.Magenta;
                     Console.WriteLine(DateTime.Now + " - You said: " + message);
                     BinaryWriter writer = new BinaryWriter(n);
                     writer.Write(message);
@@ -89,7 +89,7 @@ namespace ItsApp
                         Console.WriteLine($"{output.TimeStamp} - {output.SentBy}: {output.Input}");
                     }else
                     {
-                        Console.ForegroundColor = ConsoleColor.Magenta;
+                        Console.ForegroundColor = ConsoleColor.White;
                         Console.WriteLine(message);
                     }
                 }
