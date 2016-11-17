@@ -89,7 +89,7 @@ namespace ItsApp
                         Console.WriteLine($"{output.TimeStamp} - {output.SentBy}: {output.Input}");
                     }else
                     {
-                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.ForegroundColor = ConsoleColor.Magenta;
                         Console.WriteLine(message);
                     }
                 }
