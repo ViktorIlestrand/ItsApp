@@ -92,7 +92,7 @@ namespace ItsApp
                         else
                         {
                             Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine($"{output.TimeStamp} - {output.SentByName} Viskar till dig: {output.Input}");
+                            Console.WriteLine($"{output.TimeStamp} - {output.SentBy} {output.SentByName} Viskar till dig: {output.Input}");
                         }
                     }
                     else
